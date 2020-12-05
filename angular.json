@@ -33,7 +33,10 @@
               "src/assets/sb-admin-2.min.css",
               "node_modules/@swimlane/ngx-datatable/themes/bootstrap.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/sb-admin-2.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {

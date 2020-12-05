@@ -1,12 +1,7 @@
-﻿<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active">Home</a>
-        <a class="nav-item nav-link" (click)="logout()">Logout</a>
-    </div>
-</nav>
-
-<!-- main app container -->
-<div class="container">
+﻿<!-- Page Wrapper -->
+<div id="wrapper">
+  <app-navbar></app-navbar>
+  <div id="content-wrapper" class="d-flex flex-column">
     <router-outlet></router-outlet>
+  </div>
 </div>
