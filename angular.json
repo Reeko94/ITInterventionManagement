@@ -30,7 +30,8 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss",
-              "src/assets/sb-admin-2.min.css"
+              "src/assets/sb-admin-2.min.css",
+              "node_modules/@swimlane/ngx-datatable/themes/bootstrap.css"
             ],
             "scripts": []
           },

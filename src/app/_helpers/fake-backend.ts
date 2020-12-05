@@ -4,6 +4,10 @@ import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
+const customers = [
+  {id: 1, firstname: 'Théo', lastname: 'clast', email: 'cemail@email.com', phone: '0609886762', address: '9 avenue georges foureau', zipcode: '94420', city: 'Le Plessis Trévise' },
+  {id: 1, firstname: 'cfirst', lastname: 'clast', email: 'cemail@email.com', phone: '0609886762', address: '9 avenue georges foureau', zipcode: '94420', city: 'Le Plessis Trévise' }
+];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -23,10 +27,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
+                case url.endsWith('/customers') && method === 'GET':
+                  return getCustomers();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
-            }    
+            }
         }
 
         // route functions
@@ -34,25 +40,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
-            if (!user) return error('Username or password is incorrect');
+            if (!user) { return error('Username or password is incorrect'); }
             return ok({
                 id: user.id,
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 token: 'fake-jwt-token'
-            })
+            });
         }
 
         function getUsers() {
-            if (!isLoggedIn()) return unauthorized();
+            if (!isLoggedIn()) { return unauthorized(); }
             return ok(users);
+        }
+
+        function getCustomers() {
+          if (!isLoggedIn()) { return unauthorized(); }
+          return ok(customers);
         }
 
         // helper functions
 
         function ok(body?) {
-            return of(new HttpResponse({ status: 200, body }))
+            return of(new HttpResponse({ status: 200, body }));
         }
 
         function error(message) {
