@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 mt-4 mb-4">
+      <h1>Liste des clients</h1>
+    </div>
+    <div class="col-md-12">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+        </div>
+        <div class="card-body">
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="customers"
+            [loadingIndicator]="true"
+            [columns]="columns"
+            [headerHeight]="40"
+            [summaryRow]="true"
+            [summaryPosition]="'bottom'"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="40"
+            [limit]="10"
+            rowHeight="auto"
+            [reorderable]="true"
+          ></ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
