@@ -16,7 +16,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ListComponent } from './customers/list/list.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';;
+import { NewComponent } from './customers/new/new.component'
 @NgModule({
     imports: [
         BrowserModule,
@@ -33,7 +34,8 @@ import { NavbarComponent } from './navbar/navbar.component';
         LoginComponent,
         ListComponent,
         NavbarComponent
-    ],
+,
+        NewComponent    ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

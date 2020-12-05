@@ -4,10 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 const users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
-const customers = [
-  {id: 1, firstname: 'Théo', lastname: 'clast', email: 'cemail@email.com', phone: '0609886762', address: '9 avenue georges foureau', zipcode: '94420', city: 'Le Plessis Trévise' },
-  {id: 1, firstname: 'cfirst', lastname: 'clast', email: 'cemail@email.com', phone: '0609886762', address: '9 avenue georges foureau', zipcode: '94420', city: 'Le Plessis Trévise' }
-];
+import * as customers from './customers.json';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -21,7 +18,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(delay(500))
             .pipe(dematerialize());
 
-        function handleRoute() {
+        function handleRoute(){
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
@@ -29,6 +26,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUsers();
                 case url.endsWith('/customers') && method === 'GET':
                   return getCustomers();
+              case url.endsWith('/customer') && method === 'POST':
+                  return addCustomer(body);
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -37,7 +36,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // route functions
 
-        function authenticate() {
+        function authenticate(): Observable<HttpResponse<any>> {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
             if (!user) { return error('Username or password is incorrect'); }
@@ -50,19 +49,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
         }
 
-        function getUsers() {
+        function getUsers(): Observable<HttpResponse<any>> {
             if (!isLoggedIn()) { return unauthorized(); }
             return ok(users);
         }
 
-        function getCustomers() {
+        function getCustomers(): Observable<HttpResponse<any>> {
           if (!isLoggedIn()) { return unauthorized(); }
-          return ok(customers);
+          return ok(customers.default);
         }
 
+        function addCustomer(data): Observable<HttpResponse<any>> {
+          if (!isLoggedIn()) { return unauthorized(); }
+          const c = customers.default;
+          data.id = 12;
+          c.push(data);
+          return created();
+        }
         // helper functions
 
-        function ok(body?) {
+        function created(): Observable<HttpResponse<any>> {
+          return of(new HttpResponse({status: 201}));
+      }
+
+        function ok(body?: object): Observable<HttpResponse<any>> {
             return of(new HttpResponse({ status: 200, body }));
         }
 

@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 mt-5 mb-5">
+      <h1 class="text-capitalize text-center">Création d'un client</h1>
+    </div>
+    <div class="col-md-12">
+      <div class="card shadow shadow-lg">
+        <div class="card-header" *ngIf="error">
+          <div class="alert alert-danger">{{error}}</div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="newClientForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="firstname">Prénom <span class="required">(*)</span></label>
+              <input type="text" formControlName="firstname" id="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && formData.firstname.errors }">
+              <small *ngIf="submitted && formData.firstname.status === 'INVALID'" class="form-text text-danger">Le prénom est requis</small>
+            </div>
+            <div class="form-group">
+              <label for="lastname">Nom de famille <span class="required">(*)</span></label>
+              <input type="text" formControlName="lastname" id="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && formData.lastname.errors }">
+            </div>
+            <div class="form-group">
+              <label for="email">Adresse email <span class="required">(*)</span></label>
+              <input type="email" formControlName="email" id="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && formData.email.errors }">
+            </div>
+            <div class="form-group">
+              <label for="phone">Téléphone <span class="required">(*)</span></label>
+              <input type="text" formControlName="phone" id="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && formData.phone.errors }">
+            </div>
+            <div class="form-group">
+              <label for="address">Adresse Postale</label>
+              <input type="text" formControlName="address" id="address" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="zipcode">Code Postal</label>
+              <input type="text" formControlName="zipcode" id="zipcode" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="city">Ville</label>
+              <input type="text" formControlName="city" id="city" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Enregister" class="btn btn-block btn-lg btn-primary">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

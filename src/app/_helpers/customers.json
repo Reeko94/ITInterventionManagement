@@ -1,0 +1,4 @@
+[
+  {"id":1, "firstname":"Théo", "lastname":"clast", "email":"cemail@email.com", "phone":"0609886762", "address":"9 avenue georges foureau", "zipcode":"94420", "city":"Le Plessis Trévise" },
+  {"id":1, "firstname":"cfirst", "lastname":"clast", "email":"cemail@email.com", "phone":"0609886762", "address":"9 avenue georges foureau", "zipcode":"94420", "city":"Le Plessis Trévise" }
+]
